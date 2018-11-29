@@ -10,20 +10,17 @@ public class Kata5P1 {
 
     public static void main(String[] args) throws SQLException {
         
-        Connection conn = null;
         String url  = "jdbc:sqlite:KATA5.db";
-        conn = DriverManager.getConnection(url);
-        System.out.println("Conexión establecida");
-        String sql = "SELECT * FROM PEOPLE";
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
+        String sql = "CREATE TABLE EMAIL (\n"
+                + "Id integer PRIMARY KEY AUTOINCREMENT,\n"
+                + "Mail text NOT NULL)";
         
-        while(rs.next()){
-            System.out.println(rs.getInt("id") + "\t" +
-                                rs.getString("Name") + "\t" +
-                                rs.getString("Apellidos") + "\t" +
-                                rs.getString("Departamento") + "\t" );
+        try{ Connection conn = DriverManager.getConnection(url);
+            Statement stm = conn.createStatement();
+            stm.execute(sql);
+            System.out.println("Se ha creado la tabla EMAIL");
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
         }
-        
     }
 }
